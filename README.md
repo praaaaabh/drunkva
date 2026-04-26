@@ -1,2 +1,23 @@
-# drunkva
-Drunkva is a social night-out tracker where users log drinking sessions, spend, venues, friends, hangovers, and personal stats.
+# Drunkva
+
+Initial Phase 1 MVP for Drunkva, a playful but responsible social night-out tracker.
+
+## Stack
+
+- Next.js App Router
+- TypeScript
+- Tailwind CSS
+- Mock UI only, no Supabase integration yet
+
+## Run locally
+
+```bash
+npm install
+npm run dev
+```
+
+## Build
+
+```bash
+npm run build
+```
