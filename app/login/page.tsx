@@ -1,31 +1,23 @@
-import Link from "next/link";
 import { MarketingNav } from "@/components/marketing-nav";
+import { LoginForm } from "@/components/auth/login-form";
+import { createSupabaseServerClient } from "@/lib/supabase/server";
+import { redirect } from "next/navigation";
 
-export default function LoginPage() {
+export default async function LoginPage() {
+  const supabase = await createSupabaseServerClient();
+  const {
+    data: { user }
+  } = await supabase.auth.getUser();
+
+  if (user) {
+    redirect("/feed");
+  }
+
   return (
     <div className="min-h-screen noise">
       <MarketingNav />
       <main className="mx-auto flex max-w-md flex-col px-5 py-12">
-        <section className="rounded-lg border border-ink/10 bg-white p-6 shadow-soft">
-          <p className="text-sm font-black uppercase tracking-[0.16em] text-punch">Welcome back</p>
-          <h1 className="mt-3 text-3xl font-black tracking-tight text-ink">Log in to Drunkva</h1>
-          <form className="mt-7 space-y-4">
-            <label className="block">
-              <span className="text-sm font-bold text-ink/70">Email</span>
-              <input type="email" placeholder="you@example.com" className="mt-2 w-full rounded-lg border border-ink/15 bg-white px-4 py-3 outline-none ring-grape/20 transition focus:border-grape focus:ring-4" />
-            </label>
-            <label className="block">
-              <span className="text-sm font-bold text-ink/70">Password</span>
-              <input type="password" placeholder="••••••••" className="mt-2 w-full rounded-lg border border-ink/15 bg-white px-4 py-3 outline-none ring-grape/20 transition focus:border-grape focus:ring-4" />
-            </label>
-            <button type="button" className="w-full rounded-lg bg-ink px-4 py-3 font-black text-white shadow-soft transition hover:-translate-y-0.5">
-              Log in
-            </button>
-          </form>
-          <p className="mt-5 text-center text-sm text-ink/60">
-            New here? <Link href="/signup" className="font-black text-grape">Create an account</Link>
-          </p>
-        </section>
+        <LoginForm />
       </main>
     </div>
   );

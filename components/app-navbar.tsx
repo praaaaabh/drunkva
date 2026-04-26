@@ -2,9 +2,10 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { BarChart3, CirclePlus, Home, Settings, UserRound } from "lucide-react";
+import { BarChart3, CirclePlus, Home, LogOut, Settings, UserRound } from "lucide-react";
 import { clsx } from "clsx";
 import { Brand } from "@/components/brand";
+import { logoutAction } from "@/app/auth/actions";
 
 const links = [
   { href: "/feed", label: "Feed", icon: Home },
@@ -39,9 +40,12 @@ export function AppNavbar() {
             );
           })}
         </nav>
-        <Link href="/profile" className="grid h-10 w-10 place-items-center rounded-full bg-grape text-sm font-black text-white">
-          JP
-        </Link>
+        <form action={logoutAction} className="hidden md:block">
+          <button type="submit" className="inline-flex h-10 items-center gap-2 rounded-lg border border-ink/10 bg-white/75 px-3 text-sm font-black text-ink/70 transition hover:bg-white hover:text-ink">
+            <LogOut className="h-4 w-4" aria-hidden="true" />
+            Log out
+          </button>
+        </form>
       </div>
       <nav className="grid grid-cols-5 border-t border-ink/10 bg-white/90 md:hidden">
         {links.map(({ href, label, icon: Icon }) => {
@@ -61,6 +65,12 @@ export function AppNavbar() {
           );
         })}
       </nav>
+      <form action={logoutAction} className="border-t border-ink/10 bg-white/90 px-4 py-2 md:hidden">
+        <button type="submit" className="inline-flex w-full items-center justify-center gap-2 rounded-lg border border-ink/10 px-3 py-2 text-sm font-black text-ink/70">
+          <LogOut className="h-4 w-4" aria-hidden="true" />
+          Log out
+        </button>
+      </form>
     </header>
   );
 }
